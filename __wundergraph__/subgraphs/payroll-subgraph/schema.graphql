@@ -1,0 +1,74 @@
+schema {
+  query: Query
+}
+
+type Benefits @key(fields: "id") {
+  createdAt: String!
+  effectiveDate: String!
+  endDate: String
+  healthInsurance: HealthInsurance!
+  id: ID!
+  isActive: Boolean!
+  paidTimeOff: PaidTimeOff!
+  retirement: Retirement!
+  updatedAt: String!
+  user: User!
+}
+
+enum CoverageLevel {
+  FAMILY
+  INDIVIDUAL
+}
+
+type HealthInsurance {
+  coverageLevel: CoverageLevel!
+  deductible: Float!
+  monthlyPremium: Float!
+  plan: String!
+}
+
+type PaidTimeOff {
+  holidaysPerYear: Int!
+  personalDaysPerYear: Int!
+  sickDaysPerYear: Int!
+  vacationDaysPerYear: Int!
+}
+
+enum PayFrequency {
+  BIWEEKLY
+  MONTHLY
+  SEMIMONTHLY
+  WEEKLY
+}
+
+type Query {
+  benefits(userId: ID!): Benefits
+  salary(userId: ID!): Salary
+}
+
+type Retirement {
+  employeeContributionPercent: Float!
+  employerMatchPercent: Float!
+  plan: String!
+  vestingSchedule: String!
+}
+
+type Salary @key(fields: "id") {
+  baseSalary: Float!
+  createdAt: String!
+  currency: String!
+  effectiveDate: String!
+  endDate: String
+  id: ID!
+  isActive: Boolean!
+  payFrequency: PayFrequency!
+  updatedAt: String!
+  user: User!
+}
+
+type User @key(fields: "id") {
+  benefits: Benefits
+  id: ID!
+  salary: Salary
+  totalCompensation: Float
+}
